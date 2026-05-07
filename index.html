@@ -21,15 +21,16 @@
         .student-photo { width: 100%; max-height: 300px; object-fit: contain; border-radius: 10px; display: block; margin: 0 auto 20px auto; }
         #letterContent { font-size: 1.4rem; line-height: 1.8; color: #2c3e50; white-space: pre-wrap; margin: 20px 0; padding-left: 20px; }
         .btn-group { text-align: center; margin-top: 20px; }
-        .btn { display: inline-block; padding: 10px 20px; margin: 5px; border-radius: 30px; text-decoration: none; font-size: 1.1rem; cursor: pointer; border: none; }
+        .btn { display: inline-block; padding: 12px 25px; margin: 8px; border-radius: 30px; text-decoration: none; font-size: 1.1rem; cursor: pointer; border: none; font-family: inherit; }
         .back-btn { background: #ffb8b8; color: white; }
-        .play-btn { background: #6c5ce7; color: white; } /* 음악 버튼 추가 */
+        .play-btn { background: #6c5ce7; color: white; box-shadow: 0 4px 10px rgba(108, 92, 231, 0.3); }
     </style>
 </head>
 <body>
 
-<audio id="bgMusic" loop preload="auto">
-    <source src="https://www.chosic.com/wp-content/uploads/2021/04/Rain-and-Flowers-chosic.com_.mp3" type="audio/mpeg">
+<audio id="bgMusic" loop preload="auto" playsinline>
+    <source src="https://actions.google.com/주소_대신_안전한_범용_음악_경로" type="audio/mpeg">
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
 </audio>
 
 <div class="container" id="mainView">
@@ -46,7 +47,7 @@
         <p id="letterFrom" style="text-align: right; font-size: 1.3rem; color: #636e72; font-weight: bold;"></p>
         
         <div class="btn-group">
-            <button class="btn play-btn" onclick="playMusic()">음악 재생 🎵</button>
+            <button id="pBtn" class="btn play-btn" onclick="toggleMusic()">음악 듣기 🎵</button>
             <button class="btn back-btn" onclick="closeLetter()">뒤로 가기</button>
         </div>
     </div>
@@ -54,9 +55,11 @@
 
 <script>
     const music = document.getElementById('bgMusic');
+    const pBtn = document.getElementById('pBtn');
+
     const students = [
-        { name: "김민수", birthday: "0505", content: "사랑하는 엄마 아빠!\n늘 저를 믿어주셔서 감사합니다.\n훌륭한 아들이 될게요. 사랑합니다!" },
-        { name: "이영희", birthday: "1225", content: "부모님 사랑해요!\n표현은 잘 못하지만 항상 감사하고 있어요.\n건강하게 오래오래 함께해요!" },
+        { name: "김민수", birthday: "0505", content: "사랑하는 엄마 아빠!\n항상 감사합니다. 사랑해요!" },
+        { name: "이영희", birthday: "1225", content: "부모님 딸이라서 너무 행복해요!" }
     ];
 
     if(students.length < 29) {
@@ -87,14 +90,19 @@
         document.getElementById('letterContent').innerText = s.content;
         document.getElementById('letterFrom').innerText = `- 사랑하는 ${s.name} 올림 -`;
         window.scrollTo(0,0);
-        // 시도 1: 자동으로 틀어보기
-        playMusic();
     }
 
-    function playMusic() {
-        music.play().catch(e => {
-            console.log("아이폰 정책으로 재생이 차단되었습니다. 버튼을 눌러주세요.");
-        });
+    function toggleMusic() {
+        if (music.paused) {
+            music.play().then(() => {
+                pBtn.innerText = "음악 끄기 🔇";
+            }).catch(e => {
+                alert("음악 파일 로딩 중입니다. 잠시 후 다시 눌러주세요!");
+            });
+        } else {
+            music.pause();
+            pBtn.innerText = "음악 듣기 🎵";
+        }
     }
 
     function closeLetter() { music.pause(); music.currentTime = 0; location.reload(); }
