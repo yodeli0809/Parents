@@ -4,29 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>1학년 3반 마음 우체국</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
     <style>
-        :root { --font-handwriting: 'Nanum Pen Script', cursive; --bg-color: #fffafb; }
+        :root { --font-handwriting: 'Gowun Dodum', sans-serif; --bg-color: #fffafb; }
         body { font-family: var(--font-handwriting); background-color: var(--bg-color); margin: 0; padding: 20px; color: #444; word-break: keep-all; }
         .container { max-width: 600px; margin: 0 auto; text-align: center; }
-        h1 { color: #d63384; font-size: 2.5rem; margin-top: 20px; margin-bottom: 10px; font-weight: normal;}
-        .subtitle { color: #666; font-size: 1.4rem; line-height: 1.4; margin-bottom: 40px; padding: 0 10px;}
+        h1 { color: #d63384; font-size: 2.2rem; margin-top: 20px; margin-bottom: 10px; font-weight: bold;}
+        .subtitle { color: #666; font-size: 1.1rem; line-height: 1.6; margin-bottom: 40px; padding: 0 10px;}
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; padding: 10px;}
         .envelope-card { background: white; border-radius: 20px; padding: 20px 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 6px 15px rgba(0,0,0,0.05); cursor: pointer; transition: all 0.3s ease; }
-        .envelope-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
         .envelope-icon { font-size: 3.5rem; margin-bottom: 5px; }
-        .student-name { font-size: 1.6rem; color: #333; }
+        .student-name { font-size: 1.3rem; color: #333; font-weight: bold; }
         #letterView { display: none; background: #fff; min-height: 100vh; position: fixed; top: 0; left: 0; width: 100%; z-index: 100; padding: 20px; box-sizing: border-box; background-image: radial-gradient(#f0f0f0 1.5px, transparent 1.5px); background-size: 30px 30px; overflow-y: auto; }
         .paper { background: #fdfdfd; max-width: 500px; margin: 0 auto; padding: 30px 20px; box-shadow: 0 0 20px rgba(0,0,0,0.05); border: 1px solid #eee; position: relative; min-height: 450px; text-align: left; }
         .paper::before { content: ''; position: absolute; top: 0; left: 30px; width: 1.5px; height: 100%; background: rgba(255, 0, 0, 0.1); }
-        .student-photo { width: 100%; max-height: 300px; object-fit: contain; border-radius: 10px; display: block; margin: 0 auto 20px auto; background-color: #f9f9f9; }
-        #letterContent { font-size: 2rem; line-height: 1.5; color: #2c3e50; white-space: pre-wrap; margin: 20px 0; padding-left: 20px; }
-        .back-btn { margin-top: 20px; display: inline-block; padding: 10px 25px; background: #ffb8b8; color: white; border-radius: 30px; text-decoration: none; font-size: 1.4rem; cursor: pointer; }
+        .student-photo { width: 100%; max-height: 300px; object-fit: contain; border-radius: 10px; display: block; margin: 0 auto 20px auto; }
+        #letterContent { font-size: 1.4rem; line-height: 1.8; color: #2c3e50; white-space: pre-wrap; margin: 20px 0; padding-left: 20px; }
+        .btn-group { text-align: center; margin-top: 20px; }
+        .btn { display: inline-block; padding: 10px 20px; margin: 5px; border-radius: 30px; text-decoration: none; font-size: 1.1rem; cursor: pointer; border: none; }
+        .back-btn { background: #ffb8b8; color: white; }
+        .play-btn { background: #6c5ce7; color: white; } /* 음악 버튼 추가 */
     </style>
 </head>
 <body>
 
-<audio id="bgMusic" loop>
+<audio id="bgMusic" loop preload="auto">
     <source src="https://www.chosic.com/wp-content/uploads/2021/04/Rain-and-Flowers-chosic.com_.mp3" type="audio/mpeg">
 </audio>
 
@@ -39,25 +41,27 @@
 <div id="letterView">
     <div class="paper">
         <img id="letterPhoto" class="student-photo" src="https://i.postimg.cc/4ybWJ6jg/IMG-6422.jpg" alt="우리 반 사진">
-        <h2 id="letterTo" style="color: #e84393; font-size: 2.2rem; margin-top: 0;"></h2>
+        <h2 id="letterTo" style="color: #e84393; font-size: 1.6rem; margin-top: 0; font-weight: bold;"></h2>
         <div id="letterContent"></div>
-        <p id="letterFrom" style="text-align: right; font-size: 1.8rem; color: #636e72;"></p>
-        <center><a class="back-btn" onclick="closeLetter()">뒤로 가기</a></center>
+        <p id="letterFrom" style="text-align: right; font-size: 1.3rem; color: #636e72; font-weight: bold;"></p>
+        
+        <div class="btn-group">
+            <button class="btn play-btn" onclick="playMusic()">음악 재생 🎵</button>
+            <button class="btn back-btn" onclick="closeLetter()">뒤로 가기</button>
+        </div>
     </div>
 </div>
 
 <script>
     const music = document.getElementById('bgMusic');
-    
-    // 학생 데이터: 여기에 실제 29명의 데이터를 한 명씩 채워주세요!
     const students = [
-        { name: "김민수", birthday: "0505", content: "사랑하는 엄마 아빠!\n늘 든든한 버팀목이 되어주셔서 감사해요.\n세상에서 가장 행복한 아들이 될게요!" },
-        { name: "이영희", birthday: "1225", content: "엄마 아빠 사랑해요!\n제가 표현은 서툴지만 늘 고마워하고 있어요.\n건강하게 오래오래 함께해요!" },
+        { name: "김민수", birthday: "0505", content: "사랑하는 엄마 아빠!\n늘 저를 믿어주셔서 감사합니다.\n훌륭한 아들이 될게요. 사랑합니다!" },
+        { name: "이영희", birthday: "1225", content: "부모님 사랑해요!\n표현은 잘 못하지만 항상 감사하고 있어요.\n건강하게 오래오래 함께해요!" },
     ];
 
     if(students.length < 29) {
         for(let i=students.length+1; i<=29; i++) {
-            students.push({ name: `학생 ${i}`, birthday: "0000", content: `사랑하는 부모님께,\n\n우리 반 친구들과 함께 준비한 편지입니다.\n키워주셔서 감사합니다. 사랑해요!` });
+            students.push({ name: `학생 ${i}`, birthday: "0000", content: `사랑하는 부모님께,\n\n키워주셔서 감사합니다.\n사랑해요!` });
         }
     }
 
@@ -67,8 +71,7 @@
     students.forEach((s, i) => {
         const card = document.createElement('div');
         card.className = 'envelope-card';
-        const color = getRainbowColor(i, 29);
-        card.innerHTML = `<div class="envelope-icon" style="color: ${color}">💌</div><div class="student-name">${s.name}</div>`;
+        card.innerHTML = `<div class="envelope-icon" style="color: ${getRainbowColor(i, 29)}">💌</div><div class="student-name">${s.name}</div>`;
         card.onclick = () => {
             const pass = prompt(`${s.name}의 생일을 입력해주세요 (4자리)`);
             if(pass === s.birthday) { showLetter(s); }
@@ -78,14 +81,20 @@
     });
 
     function showLetter(s) {
-        // 생일 확인 버튼을 누르는 순간 음악 재생 시작
-        music.play().catch(e => console.log("음악 재생 시도"));
         document.getElementById('mainView').style.display = 'none';
         document.getElementById('letterView').style.display = 'block';
         document.getElementById('letterTo').innerText = `사랑하는 부모님께`;
         document.getElementById('letterContent').innerText = s.content;
         document.getElementById('letterFrom').innerText = `- 사랑하는 ${s.name} 올림 -`;
         window.scrollTo(0,0);
+        // 시도 1: 자동으로 틀어보기
+        playMusic();
+    }
+
+    function playMusic() {
+        music.play().catch(e => {
+            console.log("아이폰 정책으로 재생이 차단되었습니다. 버튼을 눌러주세요.");
+        });
     }
 
     function closeLetter() { music.pause(); music.currentTime = 0; location.reload(); }
