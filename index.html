@@ -26,40 +26,38 @@
         
         h1 { 
             color: #d63384; 
-            font-size: 2.2rem; 
-            margin-top: 20px; 
+            font-size: 1.8rem; 
+            margin-top: 30px; 
             margin-bottom: 10px; 
             font-weight: bold;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
         }
 
-        .subtitle { color: #666; font-size: 1.1rem; line-height: 1.6; margin-bottom: 40px; padding: 0 10px;}
+        .subtitle { color: #888; font-size: 1rem; line-height: 1.6; margin-bottom: 40px; }
         
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 10px;}
         
         .envelope-card { 
-            border-radius: 20px; 
+            border-radius: 15px; 
             padding: 25px 10px; 
             display: flex; 
             flex-direction: column; 
             align-items: center; 
             justify-content: center; 
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08); 
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04); 
             cursor: pointer; 
-            transition: all 0.3s ease; 
+            transition: all 0.2s ease; 
             border: none;
         }
         
-        .envelope-card:hover { transform: translateY(-5px); box-shadow: 0 8px 18px rgba(0,0,0,0.15); }
+        .envelope-card:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.08); }
         
-        .envelope-icon { font-size: 3rem; margin-bottom: 8px; filter: drop-shadow(1px 1px 1px rgba(0,0,0,0.1)); }
+        .envelope-icon { font-size: 2.5rem; margin-bottom: 8px; opacity: 0.9; }
         
-        /* 학생 이름을 잘 보이도록 검정 테두리를 살짝 굵게 처리 */
         .student-name { 
-            font-size: 1.2rem; 
-            color: #fff; 
+            font-size: 1.15rem; 
+            color: #333; 
             font-weight: bold; 
-            text-shadow: -2px 0 1px #000, 0 2px 1px #000, 2px 0 1px #000, 0 -2px 1px #000; 
+            letter-spacing: -0.5px;
         }
 
         #letterView { 
@@ -87,7 +85,6 @@
             border: 1px solid #eee; 
             position: relative; 
             min-height: 450px; 
-            text-align: left; 
         }
 
         .paper::before { 
@@ -97,41 +94,40 @@
             left: 30px; 
             width: 1.5px; 
             height: 100%; 
-            background: rgba(255, 0, 0, 0.1); 
+            background: rgba(255, 0, 0, 0.05); 
         }
 
         .student-photo { width: 100%; max-height: 300px; object-fit: contain; border-radius: 10px; display: block; margin: 0 auto 20px auto; }
-        #letterContent { font-size: 1.4rem; line-height: 1.8; color: #2c3e50; white-space: pre-wrap; margin: 20px 0; padding-left: 20px; }
+        #letterContent { font-size: 1.3rem; line-height: 1.8; color: #444; white-space: pre-wrap; margin: 20px 0; padding-left: 20px; }
         
         .btn-group { text-align: center; margin-top: 20px; }
         .btn { 
             display: inline-block; 
-            padding: 12px 25px; 
-            margin: 8px; 
-            border-radius: 30px; 
+            padding: 10px 22px; 
+            border-radius: 20px; 
             text-decoration: none; 
-            font-size: 1.1rem; 
+            font-size: 1rem; 
             cursor: pointer; 
             border: none; 
             font-family: inherit; 
         }
-        .back-btn { background: #ffb8b8; color: white; box-shadow: 0 4px 10px rgba(255, 184, 184, 0.4); }
+        .back-btn { background: #eee; color: #666; }
     </style>
 </head>
 <body>
 
 <div class="container" id="mainView">
-    <h1>사랑하는 부모님께 마음을 보냅니다.</h1>
-    <p class="subtitle">각자의 속도와 방향대로 성장중인<br>1학년 3반 아이들의 사랑이 담긴 편지함입니다.</p>
+    <h1>사랑하는 부모님께</h1>
+    <p class="subtitle">1학년 3반 아이들의 진심을 담았습니다.</p>
     <div class="grid" id="mailboxGrid"></div>
 </div>
 
 <div id="letterView">
     <div class="paper">
         <img id="letterPhoto" class="student-photo" src="https://i.postimg.cc/4ybWJ6jg/IMG-6422.jpg" alt="우리 반 사진">
-        <h2 id="letterTo" style="color: #e84393; font-size: 1.6rem; margin-top: 0; font-weight: bold;"></h2>
+        <h2 id="letterTo" style="color: #d63384; font-size: 1.4rem; margin-top: 0; font-weight: bold;"></h2>
         <div id="letterContent"></div>
-        <p id="letterFrom" style="text-align: right; font-size: 1.3rem; color: #636e72; font-weight: bold;"></p>
+        <p id="letterFrom" style="text-align: right; font-size: 1.2rem; color: #777; font-weight: bold;"></p>
         
         <div class="btn-group">
             <button class="btn back-btn" onclick="closeLetter()">뒤로 가기</button>
@@ -140,42 +136,40 @@
 </div>
 
 <script>
-    // 이미지에서 추출한 1학년 3반 명단 (22번 제외)
     const students = [
-        { name: "1. 강동호", birthday: "0000", content: "" },
-        { name: "2. 권유빈", birthday: "0000", content: "" },
-        { name: "3. 김가연", birthday: "0000", content: "" },
-        { name: "4. 김다혜", birthday: "0000", content: "" },
-        { name: "5. 김예주", birthday: "0000", content: "" },
-        { name: "6. 김지은", birthday: "0000", content: "" },
-        { name: "7. 김창유", birthday: "0000", content: "" },
-        { name: "8. 김태건", birthday: "0000", content: "" },
-        { name: "9. 김하은", birthday: "0000", content: "" },
-        { name: "10. 라용준", birthday: "0000", content: "" },
-        { name: "11. 박정이", birthday: "0000", content: "" },
-        { name: "12. 박찬선", birthday: "0000", content: "" },
-        { name: "13. 박호건", birthday: "0000", content: "" },
-        { name: "14. 백준호", birthday: "0000", content: "" },
-        { name: "15. 선염동", birthday: "0000", content: "" },
-        { name: "16. 안승빈", birthday: "0000", content: "" },
-        { name: "17. 안시우", birthday: "0000", content: "" },
-        { name: "18. 안호준", birthday: "0000", content: "" },
-        { name: "19. 윤다온", birthday: "0000", content: "" },
-        { name: "20. 윤정후", birthday: "0000", content: "" },
-        { name: "21. 윤찬호", birthday: "0000", content: "" },
-        /* 22번 없음 */
-        { name: "23. 정채훈", birthday: "0000", content: "" },
-        { name: "24. 정환희", birthday: "0000", content: "" },
-        { name: "25. 최승호", birthday: "0000", content: "" },
-        { name: "26. 한규희", birthday: "0000", content: "" },
-        { name: "27. 한다경", birthday: "0000", content: "" },
-        { name: "28. 허손명", birthday: "0000", content: "" },
-        { name: "29. 홍은우", birthday: "0000", content: "" }
+        { name: "강동호", birthday: "0000", content: "" },
+        { name: "권유빈", birthday: "0000", content: "" },
+        { name: "김가연", birthday: "0000", content: "" },
+        { name: "김다혜", birthday: "0000", content: "" },
+        { name: "김예주", birthday: "0000", content: "" },
+        { name: "김지은", birthday: "0000", content: "" },
+        { name: "김창유", birthday: "0000", content: "" },
+        { name: "김태건", birthday: "0000", content: "" },
+        { name: "김하은", birthday: "0000", content: "" },
+        { name: "라용준", birthday: "0000", content: "" },
+        { name: "박정이", birthday: "0000", content: "" },
+        { name: "박찬선", birthday: "0000", content: "" },
+        { name: "박호건", birthday: "0000", content: "" },
+        { name: "백준호", birthday: "0000", content: "" },
+        { name: "선염동", birthday: "0000", content: "" },
+        { name: "안승빈", birthday: "0000", content: "" },
+        { name: "안시우", birthday: "0000", content: "" },
+        { name: "안호준", birthday: "0000", content: "" },
+        { name: "윤다온", birthday: "0000", content: "" },
+        { name: "윤정후", birthday: "0000", content: "" },
+        { name: "윤찬호", birthday: "0000", content: "" },
+        { name: "정채훈", birthday: "0000", content: "" },
+        { name: "정환희", birthday: "0000", content: "" },
+        { name: "최승호", birthday: "0000", content: "" },
+        { name: "한규희", birthday: "0000", content: "" },
+        { name: "한다경", birthday: "0000", content: "" },
+        { name: "허손명", birthday: "0000", content: "" },
+        { name: "홍은우", birthday: "0000", content: "" }
     ];
 
     function getCardBgColor(step, total) { 
         const hue = (step / total) * 360; 
-        return `hsl(${hue}, 65%, 75%)`; 
+        return `hsl(${hue}, 50%, 85%)`; 
     }
 
     const grid = document.getElementById('mailboxGrid');
@@ -185,7 +179,10 @@
         card.className = 'envelope-card';
         card.style.backgroundColor = getCardBgColor(i, students.length);
         
-        card.innerHTML = `<div class="envelope-icon">💌</div><div class="student-name">${s.name}</div>`;
+        // 성을 제외한 이름 추출 (예: '강동호' -> '동호')
+        const firstName = s.name.substring(1); 
+        
+        card.innerHTML = `<div class="envelope-icon">💌</div><div class="student-name">${firstName} 올림</div>`;
         card.onclick = () => {
             const pass = prompt(`${s.name} 학생의 생일을 입력해주세요 (4자리)`);
             if(pass === s.birthday) { showLetter(s); }
@@ -198,8 +195,10 @@
         document.getElementById('mainView').style.display = 'none';
         document.getElementById('letterView').style.display = 'block';
         document.getElementById('letterTo').innerText = `사랑하는 부모님께`;
-        document.getElementById('letterContent').innerText = s.content || "부모님 사랑합니다! (내용을 입력해주세요)";
-        document.getElementById('letterFrom').innerText = `- 사랑하는 ${s.name.split('. ')[1]} 올림 -`;
+        document.getElementById('letterContent').innerText = s.content || "키워주셔서 감사합니다. 사랑해요!";
+        
+        const firstName = s.name.substring(1);
+        document.getElementById('letterFrom').innerText = `- 사랑하는 ${firstName} 올림 -`;
         window.scrollTo(0,0);
     }
 
