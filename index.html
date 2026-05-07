@@ -1,1 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>어버이날 사랑의 편지함</title>
+    <style>
+        /* 스타일은 이전과 동일하게 무지개색으로 유지 */
+        body { font-family: 'Apple SD Gothic Neo', sans-serif; background-color: #fff9f9; text-align: center; margin: 0; padding: 20px; }
+        .container { max-width: 800px; margin: 0 auto; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 15px; margin-top: 30px; }
+        .box { aspect-ratio: 1/1; border-radius: 15px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        
+        /* 편지 화면 스타일 */
+        #letterView { display: none; background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); margin-top: 20px; min-height: 300px; }
+        .back-btn { margin-top: 30px; display: inline-block; padding: 10px 20px; background: #eee; border-radius: 20px; text-decoration: none; color: #666; }
+    </style>
+</head>
+<body>
 
+<div class="container" id="mainView">
+    <h1>💌 사랑의 편지함 💌</h1>
+    <p>아이의 이름을 클릭하고 생일 4자리를 입력하세요.</p>
+    <div class="grid" id="mailboxGrid"></div>
+</div>
+
+<div class="container" id="letterView">
+    <h2 id="letterTo"></h2>
+    <div id="letterContent" style="line-height: 2; white-space: pre-wrap; margin: 30px 0; text-align: left;"></div>
+    <p id="letterFrom" style="text-align: right; font-weight: bold;"></p>
+    <a href="#" class="back-btn" onclick="location.reload()">← 뒤로 가기</a>
+</div>
+
+<script>
+    // ★ 여기만 수정하면 됩니다! ★
+    const students = [
+        { name: "김민수", birthday: "0505", content: "엄마 아빠 사랑해요! 키워주셔서 감사합니다." },
+        { name: "이영희", birthday: "1225", content: "항상 건강하세요. 제가 더 잘할게요!" },
+        // 이런 식으로 29명을 쭉 나열하세요.
+    ];
+
+    // 29개 예시 데이터 생성 (실제 데이터로 채우시면 됩니다)
+    if(students.length < 29) {
+        for(let i=students.length+1; i<=29; i++) {
+            students.push({ name: `학생${i}`, birthday: "0000", content: `부모님께 드리는 ${i}번째 학생의 편지입니다.` });
+        }
+    }
+
+    const colors = ["#FF595E", "#FF924C", "#FFCA3A", "#8AC926", "#1982C4", "#4267AC", "#6A4C93"];
+    const grid = document.getElementById('mailboxGrid');
+
+    students.forEach((s, i) => {
+        const box = document.createElement('div');
+        box.className = 'box';
+        box.style.backgroundColor = colors[i % colors.length];
+        box.innerText = s.name;
+        box.onclick = () => {
+            const pass = prompt(`${s.name}의 생일 4자리를 입력하세요.`);
+            if(pass === s.birthday) {
+                showLetter(s);
+            } else if(pass !== null) {
+                alert("생일이 틀렸습니다!");
+            }
+        };
+        grid.appendChild(box);
+    });
+
+    function showLetter(s) {
+        document.getElementById('mainView').style.display = 'none';
+        document.getElementById('letterView').style.display = 'block';
+        document.getElementById('letterTo').innerText = `사랑하는 부모님께`;
+        document.getElementById('letterContent').innerText = s.content;
+        document.getElementById('letterFrom').innerText = `- 자녀 ${s.name} 올림 -`;
+        window.scrollTo(0,0);
+    }
+</script>
+</body>
+</html>
