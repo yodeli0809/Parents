@@ -3,66 +3,171 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>어버이날 사랑의 편지함</title>
+    <title>1학년 3반 마음 우체국</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet">
     <style>
-        /* 스타일은 이전과 동일하게 무지개색으로 유지 */
-        body { font-family: 'Apple SD Gothic Neo', sans-serif; background-color: #fff9f9; text-align: center; margin: 0; padding: 20px; }
-        .container { max-width: 800px; margin: 0 auto; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 15px; margin-top: 30px; }
-        .box { aspect-ratio: 1/1; border-radius: 15px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        :root {
+            --font-handwriting: 'Nanum Pen Script', cursive;
+            --bg-color: #fffafb;
+        }
+
+        body { 
+            font-family: var(--font-handwriting); 
+            background-color: var(--bg-color); 
+            margin: 0; padding: 20px; color: #444;
+            word-break: keep-all;
+        }
         
-        /* 편지 화면 스타일 */
-        #letterView { display: none; background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); margin-top: 20px; min-height: 300px; }
-        .back-btn { margin-top: 30px; display: inline-block; padding: 10px 20px; background: #eee; border-radius: 20px; text-decoration: none; color: #666; }
+        .container { max-width: 600px; margin: 0 auto; text-align: center; }
+        
+        /* 메인 제목 스타일 */
+        h1 { 
+            color: #d63384; 
+            font-size: 2.5rem; 
+            margin-top: 20px;
+            margin-bottom: 10px; 
+            font-weight: normal;
+        }
+        
+        /* 부제목 스타일 */
+        .subtitle { 
+            color: #666; 
+            font-size: 1.4rem; 
+            line-height: 1.4;
+            margin-bottom: 40px; 
+            padding: 0 10px;
+        }
+
+        /* 편지함 그리드: 한 줄에 2개씩 */
+        .grid { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 20px; 
+            padding: 10px;
+        }
+
+        .envelope-card {
+            background: white;
+            border-radius: 20px;
+            padding: 20px 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.05);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .envelope-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        
+        .envelope-icon { font-size: 3.5rem; margin-bottom: 5px; }
+        .student-name { font-size: 1.6rem; color: #333; }
+
+        /* 편지 보기 화면 */
+        #letterView { 
+            display: none; 
+            background: #fff; 
+            min-height: 100vh;
+            position: fixed; top: 0; left: 0; width: 100%; z-index: 100;
+            padding: 40px 20px; box-sizing: border-box;
+            background-image: radial-gradient(#f0f0f0 1.5px, transparent 1.5px);
+            background-size: 30px 30px;
+            overflow-y: auto;
+        }
+
+        .paper {
+            background: #fdfdfd;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 40px 25px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.05);
+            border: 1px solid #eee;
+            position: relative;
+            min-height: 450px;
+            text-align: left;
+        }
+
+        .paper::before {
+            content: '';
+            position: absolute; top: 0; left: 35px; width: 1.5px; height: 100%;
+            background: rgba(255, 0, 0, 0.1);
+        }
+
+        #letterContent { 
+            font-size: 2rem; 
+            line-height: 1.5; 
+            color: #2c3e50;
+            white-space: pre-wrap;
+            margin: 30px 0;
+            padding-left: 20px;
+        }
+
+        .back-btn { 
+            margin-top: 20px; display: inline-block; padding: 10px 25px; 
+            background: #ffb8b8; color: white; border-radius: 30px; 
+            text-decoration: none; font-size: 1.4rem;
+        }
     </style>
 </head>
 <body>
 
 <div class="container" id="mainView">
-    <h1>💌 사랑의 편지함 💌</h1>
-    <p>아이의 이름을 클릭하고 생일 4자리를 입력하세요.</p>
+    <h1>사랑하는 부모님께 마음을 보냅니다.</h1>
+    <p class="subtitle">각자의 속도와 방향대로 성장중인<br>1학년 3반 아이들의 사랑이 담긴 편지함입니다.</p>
     <div class="grid" id="mailboxGrid"></div>
 </div>
 
-<div class="container" id="letterView">
-    <h2 id="letterTo"></h2>
-    <div id="letterContent" style="line-height: 2; white-space: pre-wrap; margin: 30px 0; text-align: left;"></div>
-    <p id="letterFrom" style="text-align: right; font-weight: bold;"></p>
-    <a href="#" class="back-btn" onclick="location.reload()">← 뒤로 가기</a>
+<div id="letterView">
+    <div class="paper">
+        <h2 id="letterTo" style="color: #e84393; font-size: 2.2rem; margin-top: 0;"></h2>
+        <div id="letterContent"></div>
+        <p id="letterFrom" style="text-align: right; font-size: 1.8rem; color: #636e72;"></p>
+        <center><a href="#" class="back-btn" onclick="location.reload()">뒤로 가기</a></center>
+    </div>
 </div>
 
 <script>
-    // ★ 여기만 수정하면 됩니다! ★
+    // 학생 데이터 (이름, 생일, 내용 수정)
     const students = [
-        { name: "김민수", birthday: "0505", content: "엄마 아빠 사랑해요! 키워주셔서 감사합니다." },
-        { name: "이영희", birthday: "1225", content: "항상 건강하세요. 제가 더 잘할게요!" },
-        // 이런 식으로 29명을 쭉 나열하세요.
+        { name: "김민수", birthday: "0505", content: "사랑하는 엄마 아빠!\n항상 저를 믿어주셔서 감사해요.\n건강하고 행복하게 자랄게요. 사랑합니다!" },
+        { name: "이영희", birthday: "1225", content: "어버이날 축하드려요!\n부모님 딸이라서 너무 좋아요.\n우리 가족 최고! 사랑해요!" },
     ];
 
-    // 29개 예시 데이터 생성 (실제 데이터로 채우시면 됩니다)
+    // 29명 데이터 생성
     if(students.length < 29) {
         for(let i=students.length+1; i<=29; i++) {
-            students.push({ name: `학생${i}`, birthday: "0000", content: `부모님께 드리는 ${i}번째 학생의 편지입니다.` });
+            students.push({ name: `학생 ${i}`, birthday: "0000", content: `사랑하는 부모님께,\n\n키워주셔서 감사합니다.\n사랑해요!` });
         }
     }
 
-    const colors = ["#FF595E", "#FF924C", "#FFCA3A", "#8AC926", "#1982C4", "#4267AC", "#6A4C93"];
+    // 그라데이션 색상 생성
+    function getRainbowColor(step, total) {
+        const hue = (step / total) * 240; 
+        return `hsl(${hue}, 80%, 65%)`;
+    }
+
     const grid = document.getElementById('mailboxGrid');
 
     students.forEach((s, i) => {
-        const box = document.createElement('div');
-        box.className = 'box';
-        box.style.backgroundColor = colors[i % colors.length];
-        box.innerText = s.name;
-        box.onclick = () => {
-            const pass = prompt(`${s.name}의 생일 4자리를 입력하세요.`);
+        const card = document.createElement('div');
+        card.className = 'envelope-card';
+        const color = getRainbowColor(i, 29);
+        
+        card.innerHTML = `
+            <div class="envelope-icon" style="color: ${color}">💌</div>
+            <div class="student-name">${s.name}</div>
+        `;
+        
+        card.onclick = () => {
+            const pass = prompt(`${s.name}의 생일을 입력해주세요 (4자리)`);
             if(pass === s.birthday) {
                 showLetter(s);
             } else if(pass !== null) {
-                alert("생일이 틀렸습니다!");
+                alert("생일이 틀렸어요. 다시 확인해주세요!");
             }
         };
-        grid.appendChild(box);
+        grid.appendChild(card);
     });
 
     function showLetter(s) {
@@ -70,7 +175,7 @@
         document.getElementById('letterView').style.display = 'block';
         document.getElementById('letterTo').innerText = `사랑하는 부모님께`;
         document.getElementById('letterContent').innerText = s.content;
-        document.getElementById('letterFrom').innerText = `- 자녀 ${s.name} 올림 -`;
+        document.getElementById('letterFrom').innerText = `- 사랑하는 ${s.name} 올림 -`;
         window.scrollTo(0,0);
     }
 </script>
