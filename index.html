@@ -24,40 +24,42 @@
 
         .container { max-width: 600px; margin: 0 auto; text-align: center; }
         
+        /* 선생님의 원래 제목 스타일 복구 */
         h1 { 
             color: #d63384; 
-            font-size: 1.8rem; 
-            margin-top: 30px; 
+            font-size: 2.2rem; 
+            margin-top: 20px; 
             margin-bottom: 10px; 
             font-weight: bold;
         }
 
-        .subtitle { color: #888; font-size: 1rem; line-height: 1.6; margin-bottom: 40px; }
+        /* 선생님의 원래 부제목 스타일 복구 */
+        .subtitle { color: #666; font-size: 1.1rem; line-height: 1.6; margin-bottom: 40px; padding: 0 10px;}
         
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 10px;}
         
         .envelope-card { 
-            border-radius: 15px; 
+            border-radius: 20px; 
             padding: 25px 10px; 
             display: flex; 
             flex-direction: column; 
             align-items: center; 
             justify-content: center; 
-            box-shadow: 0 2px 8px rgba(0,0,0,0.04); 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06); 
             cursor: pointer; 
-            transition: all 0.2s ease; 
+            transition: all 0.3s ease; 
             border: none;
         }
         
-        .envelope-card:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.08); }
+        .envelope-card:hover { transform: translateY(-5px); box-shadow: 0 8px 18px rgba(0,0,0,0.1); }
         
-        .envelope-icon { font-size: 2.5rem; margin-bottom: 8px; opacity: 0.9; }
+        .envelope-icon { font-size: 3rem; margin-bottom: 8px; }
         
+        /* 짙은 회색, 그림자 없음 */
         .student-name { 
-            font-size: 1.15rem; 
+            font-size: 1.2rem; 
             color: #333; 
             font-weight: bold; 
-            letter-spacing: -0.5px;
         }
 
         #letterView { 
@@ -85,6 +87,7 @@
             border: 1px solid #eee; 
             position: relative; 
             min-height: 450px; 
+            text-align: left;
         }
 
         .paper::before { 
@@ -94,40 +97,41 @@
             left: 30px; 
             width: 1.5px; 
             height: 100%; 
-            background: rgba(255, 0, 0, 0.05); 
+            background: rgba(255, 0, 0, 0.1); 
         }
 
         .student-photo { width: 100%; max-height: 300px; object-fit: contain; border-radius: 10px; display: block; margin: 0 auto 20px auto; }
-        #letterContent { font-size: 1.3rem; line-height: 1.8; color: #444; white-space: pre-wrap; margin: 20px 0; padding-left: 20px; }
+        #letterContent { font-size: 1.4rem; line-height: 1.8; color: #2c3e50; white-space: pre-wrap; margin: 20px 0; padding-left: 20px; }
         
         .btn-group { text-align: center; margin-top: 20px; }
         .btn { 
             display: inline-block; 
-            padding: 10px 22px; 
-            border-radius: 20px; 
+            padding: 12px 25px; 
+            margin: 8px; 
+            border-radius: 30px; 
             text-decoration: none; 
-            font-size: 1rem; 
+            font-size: 1.1rem; 
             cursor: pointer; 
             border: none; 
             font-family: inherit; 
         }
-        .back-btn { background: #eee; color: #666; }
+        .back-btn { background: #ffb8b8; color: white; }
     </style>
 </head>
 <body>
 
 <div class="container" id="mainView">
-    <h1>사랑하는 부모님께</h1>
-    <p class="subtitle">1학년 3반 아이들의 진심을 담았습니다.</p>
+    <h1>사랑하는 부모님께 마음을 보냅니다.</h1>
+    <p class="subtitle">각자의 속도와 방향대로 성장중인<br>1학년 3반 아이들의 사랑이 담긴 편지함입니다.</p>
     <div class="grid" id="mailboxGrid"></div>
 </div>
 
 <div id="letterView">
     <div class="paper">
         <img id="letterPhoto" class="student-photo" src="https://i.postimg.cc/4ybWJ6jg/IMG-6422.jpg" alt="우리 반 사진">
-        <h2 id="letterTo" style="color: #d63384; font-size: 1.4rem; margin-top: 0; font-weight: bold;"></h2>
+        <h2 id="letterTo" style="color: #e84393; font-size: 1.6rem; margin-top: 0; font-weight: bold;"></h2>
         <div id="letterContent"></div>
-        <p id="letterFrom" style="text-align: right; font-size: 1.2rem; color: #777; font-weight: bold;"></p>
+        <p id="letterFrom" style="text-align: right; font-size: 1.3rem; color: #636e72; font-weight: bold;"></p>
         
         <div class="btn-group">
             <button class="btn back-btn" onclick="closeLetter()">뒤로 가기</button>
@@ -158,6 +162,7 @@
         { name: "윤다온", birthday: "0000", content: "" },
         { name: "윤정후", birthday: "0000", content: "" },
         { name: "윤찬호", birthday: "0000", content: "" },
+        { name: "이재원", birthday: "0000", content: "" }, // 재원 학생 추가
         { name: "정채훈", birthday: "0000", content: "" },
         { name: "정환희", birthday: "0000", content: "" },
         { name: "최승호", birthday: "0000", content: "" },
@@ -169,7 +174,7 @@
 
     function getCardBgColor(step, total) { 
         const hue = (step / total) * 360; 
-        return `hsl(${hue}, 50%, 85%)`; 
+        return `hsl(${hue}, 55%, 85%)`; 
     }
 
     const grid = document.getElementById('mailboxGrid');
@@ -179,7 +184,7 @@
         card.className = 'envelope-card';
         card.style.backgroundColor = getCardBgColor(i, students.length);
         
-        // 성을 제외한 이름 추출 (예: '강동호' -> '동호')
+        // 성 제외 (예: '강동호' -> '동호')
         const firstName = s.name.substring(1); 
         
         card.innerHTML = `<div class="envelope-icon">💌</div><div class="student-name">${firstName} 올림</div>`;
