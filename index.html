@@ -8,14 +8,13 @@
     <style>
         :root { 
             --font-handwriting: 'Gowun Dodum', sans-serif; 
-            /* 1번: 부드러운 무지개 그라데이션 배경색 정의 */
             --bg-rainbow: linear-gradient(135deg, #fff5f5 0%, #fff9f0 25%, #f0fff4 50%, #f0f7ff 75%, #f6f0ff 100%);
         }
         
         body { 
             font-family: var(--font-handwriting); 
             background: var(--bg-rainbow); 
-            background-attachment: fixed; /* 스크롤해도 배경 고정 */
+            background-attachment: fixed; 
             margin: 0; 
             padding: 20px; 
             color: #444; 
@@ -36,27 +35,27 @@
 
         .subtitle { color: #666; font-size: 1.1rem; line-height: 1.6; margin-bottom: 40px; padding: 0 10px;}
         
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; padding: 10px;}
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 10px;}
         
         .envelope-card { 
-            background: white; 
             border-radius: 20px; 
-            padding: 20px 10px; 
+            padding: 25px 10px; 
             display: flex; 
             flex-direction: column; 
             align-items: center; 
             justify-content: center; 
-            box-shadow: 0 6px 15px rgba(0,0,0,0.05); 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08); 
             cursor: pointer; 
             transition: all 0.3s ease; 
+            border: none;
         }
         
-        .envelope-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        .envelope-card:hover { transform: translateY(-5px); box-shadow: 0 8px 18px rgba(0,0,0,0.15); }
         
-        .envelope-icon { font-size: 3.5rem; margin-bottom: 5px; }
-        .student-name { font-size: 1.3rem; color: #333; font-weight: bold; }
+        .envelope-icon { font-size: 3rem; margin-bottom: 8px; filter: drop-shadow(1px 1px 1px rgba(0,0,0,0.1)); }
+        /* 이름이 잘 보이도록 그림자 효과를 살짝 주었습니다 */
+        .student-name { font-size: 1.3rem; color: #fff; font-weight: bold; text-shadow: 1px 1px 3px rgba(0,0,0,0.2); }
 
-        /* 편지 보기 화면 */
         #letterView { 
             display: none; 
             background: #fff; 
@@ -140,16 +139,16 @@
         { name: "이영희", birthday: "1225", content: "부모님 딸이라서 너무 행복해요!" }
     ];
 
-    // 29명까지 샘플 데이터 채우기
     if(students.length < 29) {
         for(let i=students.length+1; i<=29; i++) {
             students.push({ name: `학생 ${i}`, birthday: "0000", content: `사랑하는 부모님께,\n\n키워주셔서 감사합니다.\n사랑해요!` });
         }
     }
 
-    function getRainbowColor(step, total) { 
-        const hue = (step / total) * 280; // 무지개 색상 분배
-        return `hsl(${hue}, 70%, 60%)`; 
+    // 카드 배경색을 위한 진한 파스텔톤 생성 함수 (채도 65%, 밝기 75%)
+    function getCardBgColor(step, total) { 
+        const hue = (step / total) * 360; 
+        return `hsl(${hue}, 65%, 75%)`; 
     }
 
     const grid = document.getElementById('mailboxGrid');
@@ -157,7 +156,10 @@
     students.forEach((s, i) => {
         const card = document.createElement('div');
         card.className = 'envelope-card';
-        card.innerHTML = `<div class="envelope-icon" style="color: ${getRainbowColor(i, 29)}">💌</div><div class="student-name">${s.name}</div>`;
+        // 각 카드의 배경색을 서로 다른 색상으로 지정
+        card.style.backgroundColor = getCardBgColor(i, 29);
+        
+        card.innerHTML = `<div class="envelope-icon">💌</div><div class="student-name">${s.name}</div>`;
         card.onclick = () => {
             const pass = prompt(`${s.name}의 생일을 입력해주세요 (4자리)`);
             if(pass === s.birthday) { showLetter(s); }
@@ -176,7 +178,6 @@
     }
 
     function closeLetter() { 
-        // 페이지 새로고침하여 메인으로 이동
         location.reload(); 
     }
 </script>
