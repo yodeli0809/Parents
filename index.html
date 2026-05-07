@@ -52,11 +52,15 @@
             background: rgba(255, 0, 0, 0.1);
         }
 
-        /* 공통 사진 스타일 */
+        /* 사진 스타일 수정 */
         .student-photo {
-            width: 100%; max-width: 100%; height: auto;
+            width: 100%; 
+            max-height: 250px; /* 너무 크지 않게 조절 */
+            object-fit: cover; /* 비율에 맞춰 자르기 */
             border-radius: 10px; 
-            display: block; margin: 0 auto 20px auto;
+            display: block; 
+            margin: 0 auto 20px auto;
+            border: 1px solid #eee;
         }
 
         #letterContent { 
@@ -85,7 +89,7 @@
 
 <div id="letterView">
     <div class="paper">
-        <img id="letterPhoto" class="student-photo" src="https://i.ibb.co/68v8gW1X/image.png" alt="1학년 3반 사진">
+        <img id="letterPhoto" class="student-photo" src="https://i.postimg.cc/4ybWJ6jg/IMG-6422.jpg" alt="우리 반 사진">
         
         <h2 id="letterTo" style="color: #e84393; font-size: 2.2rem; margin-top: 0;"></h2>
         <div id="letterContent"></div>
@@ -97,20 +101,27 @@
 <script>
     const music = document.getElementById('bgMusic');
 
-    // 학생 데이터 (내용을 실제 아이들의 편지로 채워주세요!)
+    // 학생 데이터 (여기에 29명의 이름과 실제 편지 내용을 채워주시면 됩니다!)
     const students = [
         { name: "김민수", birthday: "0505", content: "사랑하는 엄마 아빠!\n키워주셔서 감사합니다. 사랑해요!" },
         { name: "이영희", birthday: "1225", content: "부모님 딸이라 너무 행복해요.\n항상 건강하세요!" },
     ];
 
-    // 29명 자동 생성
+    // 29명 자동 생성 로직
     if(students.length < 29) {
         for(let i=students.length+1; i<=29; i++) {
-            students.push({ name: `학생 ${i}`, birthday: "0000", content: `사랑하는 부모님께,\n\n우리 반 친구들과 함께 쓴 사랑의 편지입니다.\n사랑해요!` });
+            students.push({ 
+                name: `학생 ${i}`, 
+                birthday: "0000", 
+                content: `사랑하는 부모님께,\n\n우리 반 친구들과 함께 쓴 사랑의 편지입니다.\n사랑해요!` 
+            });
         }
     }
 
-    function getRainbowColor(step, total) { const hue = (step / total) * 240; return `hsl(${hue}, 80%, 65%)`; }
+    function getRainbowColor(step, total) { 
+        const hue = (step / total) * 240; 
+        return `hsl(${hue}, 80%, 65%)`; 
+    }
 
     const grid = document.getElementById('mailboxGrid');
 
@@ -132,7 +143,9 @@
     });
 
     function showLetter(s) {
-        music.play().catch(e => console.log("음악 재생 차단"));
+        // 음악 재생 시도
+        music.play().catch(e => console.log("음악 재생 차단됨"));
+        
         document.getElementById('mainView').style.display = 'none';
         document.getElementById('letterView').style.display = 'block';
         document.getElementById('letterTo').innerText = `사랑하는 부모님께`;
