@@ -6,32 +6,114 @@
     <title>1학년 3반 마음 우체국</title>
     <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
     <style>
-        :root { --font-handwriting: 'Gowun Dodum', sans-serif; --bg-color: #fffafb; }
-        body { font-family: var(--font-handwriting); background-color: var(--bg-color); margin: 0; padding: 20px; color: #444; word-break: keep-all; }
+        :root { 
+            --font-handwriting: 'Gowun Dodum', sans-serif; 
+            /* 1번: 부드러운 무지개 그라데이션 배경색 정의 */
+            --bg-rainbow: linear-gradient(135deg, #fff5f5 0%, #fff9f0 25%, #f0fff4 50%, #f0f7ff 75%, #f6f0ff 100%);
+        }
+        
+        body { 
+            font-family: var(--font-handwriting); 
+            background: var(--bg-rainbow); 
+            background-attachment: fixed; /* 스크롤해도 배경 고정 */
+            margin: 0; 
+            padding: 20px; 
+            color: #444; 
+            word-break: keep-all; 
+            min-height: 100vh;
+        }
+
         .container { max-width: 600px; margin: 0 auto; text-align: center; }
-        h1 { color: #d63384; font-size: 2.2rem; margin-top: 20px; margin-bottom: 10px; font-weight: bold;}
+        
+        h1 { 
+            color: #d63384; 
+            font-size: 2.2rem; 
+            margin-top: 20px; 
+            margin-bottom: 10px; 
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
+        }
+
         .subtitle { color: #666; font-size: 1.1rem; line-height: 1.6; margin-bottom: 40px; padding: 0 10px;}
+        
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; padding: 10px;}
-        .envelope-card { background: white; border-radius: 20px; padding: 20px 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 6px 15px rgba(0,0,0,0.05); cursor: pointer; transition: all 0.3s ease; }
+        
+        .envelope-card { 
+            background: white; 
+            border-radius: 20px; 
+            padding: 20px 10px; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            box-shadow: 0 6px 15px rgba(0,0,0,0.05); 
+            cursor: pointer; 
+            transition: all 0.3s ease; 
+        }
+        
+        .envelope-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        
         .envelope-icon { font-size: 3.5rem; margin-bottom: 5px; }
         .student-name { font-size: 1.3rem; color: #333; font-weight: bold; }
-        #letterView { display: none; background: #fff; min-height: 100vh; position: fixed; top: 0; left: 0; width: 100%; z-index: 100; padding: 20px; box-sizing: border-box; background-image: radial-gradient(#f0f0f0 1.5px, transparent 1.5px); background-size: 30px 30px; overflow-y: auto; }
-        .paper { background: #fdfdfd; max-width: 500px; margin: 0 auto; padding: 30px 20px; box-shadow: 0 0 20px rgba(0,0,0,0.05); border: 1px solid #eee; position: relative; min-height: 450px; text-align: left; }
-        .paper::before { content: ''; position: absolute; top: 0; left: 30px; width: 1.5px; height: 100%; background: rgba(255, 0, 0, 0.1); }
+
+        /* 편지 보기 화면 */
+        #letterView { 
+            display: none; 
+            background: #fff; 
+            min-height: 100vh; 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            z-index: 100; 
+            padding: 20px; 
+            box-sizing: border-box; 
+            background-image: radial-gradient(#f0f0f0 1.5px, transparent 1.5px); 
+            background-size: 30px 30px; 
+            overflow-y: auto; 
+        }
+
+        .paper { 
+            background: #fdfdfd; 
+            max-width: 500px; 
+            margin: 0 auto; 
+            padding: 30px 20px; 
+            box-shadow: 0 0 20px rgba(0,0,0,0.05); 
+            border: 1px solid #eee; 
+            position: relative; 
+            min-height: 450px; 
+            text-align: left; 
+        }
+
+        .paper::before { 
+            content: ''; 
+            position: absolute; 
+            top: 0; 
+            left: 30px; 
+            width: 1.5px; 
+            height: 100%; 
+            background: rgba(255, 0, 0, 0.1); 
+        }
+
         .student-photo { width: 100%; max-height: 300px; object-fit: contain; border-radius: 10px; display: block; margin: 0 auto 20px auto; }
         #letterContent { font-size: 1.4rem; line-height: 1.8; color: #2c3e50; white-space: pre-wrap; margin: 20px 0; padding-left: 20px; }
+        
         .btn-group { text-align: center; margin-top: 20px; }
-        .btn { display: inline-block; padding: 12px 25px; margin: 8px; border-radius: 30px; text-decoration: none; font-size: 1.1rem; cursor: pointer; border: none; font-family: inherit; }
-        .back-btn { background: #ffb8b8; color: white; }
-        .play-btn { background: #6c5ce7; color: white; box-shadow: 0 4px 10px rgba(108, 92, 231, 0.3); }
+        .btn { 
+            display: inline-block; 
+            padding: 12px 25px; 
+            margin: 8px; 
+            border-radius: 30px; 
+            text-decoration: none; 
+            font-size: 1.1rem; 
+            cursor: pointer; 
+            border: none; 
+            font-family: inherit; 
+        }
+        .back-btn { background: #ffb8b8; color: white; box-shadow: 0 4px 10px rgba(255, 184, 184, 0.4); }
     </style>
 </head>
 <body>
-
-<audio id="bgMusic" loop preload="auto" playsinline>
-    <source src="https://actions.google.com/주소_대신_안전한_범용_음악_경로" type="audio/mpeg">
-    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-</audio>
 
 <div class="container" id="mainView">
     <h1>사랑하는 부모님께 마음을 보냅니다.</h1>
@@ -47,28 +129,29 @@
         <p id="letterFrom" style="text-align: right; font-size: 1.3rem; color: #636e72; font-weight: bold;"></p>
         
         <div class="btn-group">
-            <button id="pBtn" class="btn play-btn" onclick="toggleMusic()">음악 듣기 🎵</button>
             <button class="btn back-btn" onclick="closeLetter()">뒤로 가기</button>
         </div>
     </div>
 </div>
 
 <script>
-    const music = document.getElementById('bgMusic');
-    const pBtn = document.getElementById('pBtn');
-
     const students = [
         { name: "김민수", birthday: "0505", content: "사랑하는 엄마 아빠!\n항상 감사합니다. 사랑해요!" },
         { name: "이영희", birthday: "1225", content: "부모님 딸이라서 너무 행복해요!" }
     ];
 
+    // 29명까지 샘플 데이터 채우기
     if(students.length < 29) {
         for(let i=students.length+1; i<=29; i++) {
             students.push({ name: `학생 ${i}`, birthday: "0000", content: `사랑하는 부모님께,\n\n키워주셔서 감사합니다.\n사랑해요!` });
         }
     }
 
-    function getRainbowColor(step, total) { const hue = (step / total) * 240; return `hsl(${hue}, 80%, 65%)`; }
+    function getRainbowColor(step, total) { 
+        const hue = (step / total) * 280; // 무지개 색상 분배
+        return `hsl(${hue}, 70%, 60%)`; 
+    }
+
     const grid = document.getElementById('mailboxGrid');
 
     students.forEach((s, i) => {
@@ -92,20 +175,10 @@
         window.scrollTo(0,0);
     }
 
-    function toggleMusic() {
-        if (music.paused) {
-            music.play().then(() => {
-                pBtn.innerText = "음악 끄기 🔇";
-            }).catch(e => {
-                alert("음악 파일 로딩 중입니다. 잠시 후 다시 눌러주세요!");
-            });
-        } else {
-            music.pause();
-            pBtn.innerText = "음악 듣기 🎵";
-        }
+    function closeLetter() { 
+        // 페이지 새로고침하여 메인으로 이동
+        location.reload(); 
     }
-
-    function closeLetter() { music.pause(); music.currentTime = 0; location.reload(); }
 </script>
 </body>
 </html>
