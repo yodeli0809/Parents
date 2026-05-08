@@ -6,115 +6,23 @@
     <title>1학년 3반 마음 우체국</title>
     <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
     <style>
-        :root { 
-            --font-handwriting: 'Gowun Dodum', sans-serif; 
-            --bg-rainbow: linear-gradient(135deg, #fff5f5 0%, #fff9f0 25%, #f0fff4 50%, #f0f7ff 75%, #f6f0ff 100%);
-        }
-        
-        body { 
-            font-family: var(--font-handwriting); 
-            background: var(--bg-rainbow); 
-            background-attachment: fixed; 
-            margin: 0; 
-            padding: 20px; 
-            color: #444; 
-            word-break: keep-all; 
-            min-height: 100vh;
-        }
-
+        :root { --font-handwriting: 'Gowun Dodum', sans-serif; --bg-rainbow: linear-gradient(135deg, #fff5f5 0%, #fff9f0 25%, #f0fff4 50%, #f0f7ff 75%, #f6f0ff 100%); }
+        body { font-family: var(--font-handwriting); background: var(--bg-rainbow); background-attachment: fixed; margin: 0; padding: 20px; color: #444; word-break: keep-all; min-height: 100vh; }
         .container { max-width: 600px; margin: 0 auto; text-align: center; }
-        
-        /* 선생님의 원래 제목 스타일 복구 */
-        h1 { 
-            color: #d63384; 
-            font-size: 2.2rem; 
-            margin-top: 20px; 
-            margin-bottom: 10px; 
-            font-weight: bold;
-        }
-
-        /* 선생님의 원래 부제목 스타일 복구 */
+        h1 { color: #d63384; font-size: 2.2rem; margin-top: 20px; margin-bottom: 10px; font-weight: bold;}
         .subtitle { color: #666; font-size: 1.1rem; line-height: 1.6; margin-bottom: 40px; padding: 0 10px;}
-        
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 10px;}
-        
-        .envelope-card { 
-            border-radius: 20px; 
-            padding: 25px 10px; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            justify-content: center; 
-            box-shadow: 0 4px 12px rgba(0,0,0,0.06); 
-            cursor: pointer; 
-            transition: all 0.3s ease; 
-            border: none;
-        }
-        
-        .envelope-card:hover { transform: translateY(-5px); box-shadow: 0 8px 18px rgba(0,0,0,0.1); }
-        
-        .envelope-icon { font-size: 3rem; margin-bottom: 8px; }
-        
-        /* 짙은 회색, 그림자 없음 */
-        .student-name { 
-            font-size: 1.2rem; 
-            color: #333; 
-            font-weight: bold; 
-        }
-
-        #letterView { 
-            display: none; 
-            background: #fff; 
-            min-height: 100vh; 
-            position: fixed; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            z-index: 100; 
-            padding: 20px; 
-            box-sizing: border-box; 
-            background-image: radial-gradient(#f0f0f0 1.5px, transparent 1.5px); 
-            background-size: 30px 30px; 
-            overflow-y: auto; 
-        }
-
-        .paper { 
-            background: #fdfdfd; 
-            max-width: 500px; 
-            margin: 0 auto; 
-            padding: 30px 20px; 
-            box-shadow: 0 0 20px rgba(0,0,0,0.05); 
-            border: 1px solid #eee; 
-            position: relative; 
-            min-height: 450px; 
-            text-align: left;
-        }
-
-        .paper::before { 
-            content: ''; 
-            position: absolute; 
-            top: 0; 
-            left: 30px; 
-            width: 1.5px; 
-            height: 100%; 
-            background: rgba(255, 0, 0, 0.1); 
-        }
-
-        .student-photo { width: 100%; max-height: 300px; object-fit: contain; border-radius: 10px; display: block; margin: 0 auto 20px auto; }
-        #letterContent { font-size: 1.4rem; line-height: 1.8; color: #2c3e50; white-space: pre-wrap; margin: 20px 0; padding-left: 20px; }
-        
-        .btn-group { text-align: center; margin-top: 20px; }
-        .btn { 
-            display: inline-block; 
-            padding: 12px 25px; 
-            margin: 8px; 
-            border-radius: 30px; 
-            text-decoration: none; 
-            font-size: 1.1rem; 
-            cursor: pointer; 
-            border: none; 
-            font-family: inherit; 
-        }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; padding: 10px;}
+        .envelope-card { border-radius: 20px; padding: 25px 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 6px 15px rgba(0,0,0,0.05); cursor: pointer; transition: all 0.3s ease; background-color: white; border: none; }
+        .envelope-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        .envelope-icon { font-size: 3.5rem; margin-bottom: 5px; }
+        .student-name { font-size: 1.3rem; color: #333; font-weight: bold; }
+        #letterView { display: none; background: #fff; min-height: 100vh; position: fixed; top: 0; left: 0; width: 100%; z-index: 100; padding: 20px; box-sizing: border-box; background-image: radial-gradient(#f0f0f0 1.5px, transparent 1.5px); background-size: 30px 30px; overflow-y: auto; }
+        .paper { background: #fdfdfd; max-width: 500px; margin: 40px auto; padding: 40px 30px; box-shadow: 0 0 20px rgba(0,0,0,0.05); border: 1px solid #eee; position: relative; min-height: 500px; text-align: left; }
+        .paper::before { content: ''; position: absolute; top: 0; left: 30px; width: 1.5px; height: 100%; background: rgba(255, 0, 0, 0.1); }
+        .student-photo { width: 100%; max-height: 350px; object-fit: contain; border-radius: 10px; display: block; margin: 0 auto 30px auto; }
+        #letterContent { font-size: 1.4rem; line-height: 1.8; color: #2c3e50; white-space: pre-wrap; margin: 25px 0; padding-left: 20px; }
+        .btn-group { text-align: center; margin-top: 40px; }
+        .btn { display: inline-block; padding: 12px 30px; border-radius: 30px; text-decoration: none; font-size: 1.1rem; cursor: pointer; border: none; font-family: inherit; }
         .back-btn { background: #ffb8b8; color: white; }
     </style>
 </head>
@@ -122,7 +30,7 @@
 
 <div class="container" id="mainView">
     <h1>사랑하는 부모님께 마음을 보냅니다.</h1>
-    <p class="subtitle">각자의 속도와 방향대로 성장중인<br>1학년 3반 아이들의 사랑이 담긴 편지함입니다🌈.</p>
+    <p class="subtitle">각자의 속도와 방향대로 성장중인<br>1학년 3반 아이들의 사랑이 담긴 편지함입니다.</p>
     <div class="grid" id="mailboxGrid"></div>
 </div>
 
@@ -132,7 +40,6 @@
         <h2 id="letterTo" style="color: #e84393; font-size: 1.6rem; margin-top: 0; font-weight: bold;"></h2>
         <div id="letterContent"></div>
         <p id="letterFrom" style="text-align: right; font-size: 1.3rem; color: #636e72; font-weight: bold;"></p>
-        
         <div class="btn-group">
             <button class="btn back-btn" onclick="closeLetter()">뒤로 가기</button>
         </div>
@@ -141,40 +48,40 @@
 
 <script>
     const students = [
-        { name: "강동호", birthday: "0000", content: "" },
-        { name: "권유빈", birthday: "0000", content: "" },
-        { name: "김가연", birthday: "0000", content: "" },
-        { name: "김다혜", birthday: "0000", content: "" },
-        { name: "김예주", birthday: "0000", content: "" },
-        { name: "김지은", birthday: "0000", content: "" },
-        { name: "김창유", birthday: "0000", content: "" },
-        { name: "김태건", birthday: "0000", content: "" },
-        { name: "김하은", birthday: "0000", content: "" },
-        { name: "라용준", birthday: "0000", content: "" },
-        { name: "박정이", birthday: "0000", content: "" },
-        { name: "박찬선", birthday: "0000", content: "" },
-        { name: "박호건", birthday: "0000", content: "" },
-        { name: "백준호", birthday: "0000", content: "" },
-        { name: "선염동", birthday: "0000", content: "" },
-        { name: "안승빈", birthday: "0000", content: "" },
-        { name: "안시우", birthday: "0000", content: "" },
-        { name: "안호준", birthday: "0000", content: "" },
-        { name: "윤다온", birthday: "0000", content: "" },
-        { name: "윤정후", birthday: "0000", content: "" },
-        { name: "윤찬호", birthday: "0000", content: "" },
-        { name: "이재원", birthday: "0000", content: "" }, // 재원 학생 추가
-        { name: "정채훈", birthday: "0000", content: "" },
-        { name: "정환희", birthday: "0000", content: "" },
-        { name: "최승호", birthday: "0000", content: "" },
-        { name: "한규희", birthday: "0000", content: "" },
-        { name: "한다경", birthday: "0000", content: "" },
-        { name: "허손명", birthday: "0000", content: "" },
-        { name: "홍은우", birthday: "0000", content: "" }
+        { no: "01", name: "강동호", birthday: "0227", content: "엄마 아빠 항상 힘들게 하고 속상하게 해서 죄송합니다. 항상 키워주시고 사랑해 주시는 부모님 항상 감사합니다. 맨날 월미도 야구 이걸로 돈도 많이 쓰시고 항상 감사드리고 사랑합니다. 항상 늘 건강하시고 만수무강 하세요 사랑합니다." },
+        { no: "02", name: "권유빈", birthday: "0304", content: "안녕하세요! 저 유빈이에요!!\n편지에 항상 키워주셔서 감사하다는 말만 쓰니까 진심이 잘 안 느껴지는 거 같아요.. 근데 그런 말 말고는 사실 무슨 말을 써야 할지도 잘 모르겠더라고요..\n표현을 잘한다고 생각했는데 생각보다 그리 많이 하지도 않는 거 같고, 그래도 항상 감사함을 느끼고 절 사랑해주시는 게 느껴져요! 제가 말도 안 듣고 화도 많이 내고 속을 많이 썩이기도 했는데 그래도 절 사랑해주셔서 감사합니다! 저도 사랑해요!" },
+        { no: "03", name: "김가연", birthday: "1013", content: "엄마 아빠, 사랑하는 귀염둥이 첫째 가연이에요…!\n오늘 어버이날이라서 편지를 써봤어요. 항상 저희 남매를 위해 매일 아침밥 차려 주셔서 감사합니다! 그리고 엄마 아빠 시험기간에 학원 늦게 끝나고 어두운데도 불구하고 늘 데리러 오고 영양제 챙겨주신 것 늘 감사하게 생각하고 있어요. 앞으로 공부 열심히 해서 효도할게요 제가 항상 사랑하는 거 알죠~?❤️\n-사랑하는 마음을 담아 첫째딸 가연 올림-" },
+        { no: "04", name: "김다혜", birthday: "0416", content: "안녕하세요 저 김다혜입니다. 항상 저 맛있는 거 하나 더 먹이려고 일 열심히 해주시고 하고 싶은 거 다 해주게 해주셔서 감사합니다. 까불던 김다혜가 고등학생이 돼서 좀 툴툴대고 말을 안 듣더라도 언젠간 하니까 기다려주시길 바랍니다. 앞으로 제가 먹은 음식 설거지 정도는 잘해보도록 도와드릴게요. 그리고 엄마는 요즘 힘이 빠져보이니 운동 자주 해주시고 아빠는 엄마와 동행하여 같이 해주시길 바랍니다. 이상 김다혜가 말씀했습니다.\n-우리 집안 막둥이 올림-" },
+        { no: "05", name: "김예주", birthday: "1114", content: "엄마 아빠! 나 벌써 고등학생 됐어요. 지금까지 키워주셔서 감사해요. 사고도 많이 치고 짜증도 낼 때가 있지만 항상 보듬어줘서 감사해요. 힘들 때마다 묵묵히 지켜주던 아빠, 내 고민이나 이야기 들어주는 엄마! 엄마 아빠가 있어서 행복하게 산 것 같아요. 나중에 커서 꼭 보답할게요. 엄마 아빠한테 효도 많이 할게요! 그러니까 오래 살고 건강해야 해요..!!! 그래야 많이 보답하니까 ㅎㅎ 말로는 표현 잘 못하지만 사랑해요💕" },
+        { no: "06", name: "김지은", birthday: "0128", content: "엄마, 아빠 안녕하세요. 부모님의 하나뿐인 딸 지은이에요. 제가 잘 자랄 수 있게 키워주시고 도와주셔서 감사합니다. 항상 이쁜 말 해주시고 옆에서 보살펴주셔서 감사합니다. 그런 마음 깊은 행동을 해주시는 부모님이 계시기에 제가 더 열심히 살아갈 수 있는 것 같아요. 앞으로 더 바르게 생활하고 잘 커서 더 좋은 효도를 하겠습니다. 사랑해요." },
+        { no: "07", name: "김창유", birthday: "0814", content: "아빠 평소에는 장난치고 게임하고 유튜브만 보는 것 같지만 요즘엔 계속 가족 생각만 하고 또 유독 아빠한테 서운한 감정을 많이 느꼈지만 그래도 가장 사랑하고 많이 챙겨주는 아빠 같은 사람이 없다고도 생각해요. 요즘 좀 많이 속 썩였지만 그래도 이제는 효도하는 창유가 될게요." },
+        { no: "08", name: "김태건", birthday: "1121", content: "안녕하십니까 아들래미 김태건입니다. 어버이날을 맞아 마음을 전해봅니다. 정말 어머니 아버지 덕분에 좋았던 날이 수없이 많았던 것 같습니다. 이번 어버이날은 편지로 그냥 넘어가지만 돈 벌면 꼭 롤렉스 시계와 샤넬백 사드리겠습니다. 기말 잘 보겠습니다. 사랑하는 어머니, 아버지께" },
+        { no: "09", name: "김하은", birthday: "0423", content: "어머니에게 요즘 너무 싸우는 거 같아서 죄송해요. 물론 시험기간에 열심히 공부하진 않지만 시험기간이라 예민한 것도 있고 제가 잘못한 것도 있는 거 같아요. 저도 어머니가 요구하시는 대로 맞춰보려고 하지만 그게 쉽지 않은 거 같아요. 적어도 앞으로는 집안일 많이 돕고 어머니가 요구하시는 거 최대한 맞춰보도록 할게요. 가끔은 싫어한다고 하지만 사실은 어머니를 사랑하고 좋아합니다. 지금까지 낳아주시고 잘 키워주셔서 항상 감사합니다." },
+        { no: "10", name: "라용준", birthday: "0210", content: "엄마 항상 저를 사랑해주고 애정해주셔서 감사합니다. 가끔 엄마랑 다툴 때도 있지만 그래도 저는 항상 사랑합니다. 엄마가 저를 낳아주셔서 감사합니다. 저는 다시 태어나도 엄마의 아들로 아니면 가족으로 태어나고 싶어요. 진심으로 소중하고 아끼는 엄마 사랑해요❤️" },
+        { no: "11", name: "박정이", birthday: "0707", content: "사랑하는 엄마 아빠 저를 늘 사랑으로 키워주시고 맛있는 것도 매일 사주시고 먹고 싶은 거 있다 하면 늘 사주시고 오빠랑 나를 위해 힘들게 일하시는 거에 늘 감사합니다. 아직 모자란 저를 항상 지켜주는 엄마 아빠가 있기에 이렇게 건강하게 자랐습니다. 감사합니다. 너무 사랑합니다.. 아빠 너무 사랑합니다. 늘 힘들게 일하시고 일상을 재미없게 보내시는 것 같아 맘이 아플 때가 많습니다. 제가 옆에서 늘 웃음을 드리겠습니다. 아부지 어머니 사랑합니다." },
+        { no: "12", name: "박찬선", birthday: "1114", content: "안녕하세요. 곤지암고등학교 1학년 3반 박찬선이자 엄마 아빠의 아들인 박찬선입니다. 저를 낳아주시고 사랑으로 키워주신 어머니와 아버지께 어버이날을 맞아 편지를 씁니다. 항상 저를 위해 힘써주시고 응원해주셔서 감사합니다. 운동 열심히 해서 돈 많이 벌고 꼭 호강시켜 드릴게요. 사랑합니다." },
+        { no: "13", name: "박호건", birthday: "0127", content: "엄마 아빠 안녕하세요 저 아들 호건이에요. 엄마 아빠께 하고 싶은 말이 있어서 이 편지를 써요. 저 키우느라 많이 힘드셨죠? 제가 항상 말도 안 듣고 공부도 못해서 정말 죄송해요. 앞으로는 달라진 모습을 보여주고 싶어요. 엄마 아빠가 저를 자랑스럽게 생각할 수 있도록 노력할게요. 엄마 아빠 사랑해요." },
+        { no: "14", name: "백준호", birthday: "0322", content: "저를 항상 키워주시고 도와주셔서 감사합니다. 그동안 많이 힘들게 해서 죄송합니다. 지금부터라도 저도 최대한 나아지려고 노력을 하겠습니다. 항상 사랑합니다." },
+        { no: "15", name: "선염동", birthday: "0112", content: "엄마 제가 답답하고 짜증스러워도 저를 알아주려고 해주셔서 감사합니다. 제가 아직 미숙하고 알아서 잘 못하는 것들이 많지만 그래도 절 사랑해주시면서 이해해 줄려고 노력해 주셔서 감사합니다. 제가 앞으로 스스로 할 수 있도록 노력하려고 합니다. 엄마가 간섭이 없어도 제가 알아서 할 수 있도록 습관을 가져보겠습니다. 엄마 제일 사랑해 주셔서 감사합니다~~..." },
+        { no: "16", name: "안승빈", birthday: "1010", content: "엄마, 아빠 벌써 16년이라는 긴 시간이 지나갔어요. 이 긴 시간 동안 저는 부모님과 함께하는 시간들이 정말 좋았습니다. 물론 점점 커가면서 함께하는 시간이 줄어들고 때로는 갈등이 있기도 했지만 부모님을 사랑한다는 마음은 변한 적이 없습니다. 지금은 해드릴 수 있는 게 편지뿐이지만 곧 성인이니까 돈 벌면 효도할게요. 항상 감사합니다." },
+        { no: "17", name: "안시우", birthday: "1025", content: "사랑하는 마이마더 안녕하십니까. 엄마의 레전드 아들 안시우입니다. 지금까지 저를 키워주셔서 감사했고 이제는 제가 공부 열심히 해서 효도하겠습니다. 지금까지 아들 안시우의 편지였습니다. 사랑하고 용돈 좀 올려주이소 ❤️🤍💟" },
+        { no: "18", name: "안호준", birthday: "0707", content: "엄마 항상 감사하고 고마워. 17년 동안 키워주셔서 고맙고 버팀목이 되어줘서 고마워. 엄마는 고생만 하고 나는 해준 게 없어서 미안하지만 이제부터라도 효도하고 호강시켜줄게. 오래오래 사세요. 사랑하는 엄마" },
+        { no: "19", name: "윤다온", birthday: "0313", content: "사랑하는 엄마 아빠에게, 안녕 나 다온이야. 언제나 변함없는 사랑으로 날 봐줘서 고마워. 고등학교 생활로 바쁘고 지칠 때마다 항상 내 편이라고 하고 싶은 거 하라는 응원이 나한테 늘 가장 큰 힘이 돼. 평소 무뚝뚝해서 다정하게 표현하지는 못하지만 마음속 깊이 큰 고마움과 존경하는 마음이 커. 앞으로 더 건강하고 바른 모습으로 성장해서 꼭 보답하는 자랑스러운 딸 될게. 세상에서 가장 사랑하는 엄마 아빠 항상 건강하고 매일매일 행복하기 어려워도 이 편지 읽고 조금이나마 행복하기를 바랄게." },
+        { no: "20", name: "윤정후", birthday: "0916", content: "어머니, 아버지. 막내아들 정후야. 오늘은 어버이날이래. 내가 가끔은 까칠해도 항상 사랑하는 거 알지? 나도 최대한 안 까칠하게 하려고 노력 중이야. 내가 공부 중이라 그래. 난 엄마, 아빠가 시험기간에 날 서포트해주는 걸 정말 감사하게 생각해. 그리고 엄마 만약 이걸 읽는다면 돈 좀 보내주고 사랑합니다." },
+        { no: "21", name: "윤찬호", birthday: "0506", content: "엄마 아빠 나 윤찬혼데 키워줘서 고맙고 용돈을 올려줘. 왜냐면 내가 고등학생이기 때문에 용돈이 조금만 더 올라가면 좋을 듯해. 행복한 하루 되고 내가 말한 거 좀 잘 생각해 봐. 나 진짜 진지하다." },
+        { no: "23", name: "임재원", birthday: "0218", content: "엄마 아빠 이번 어버이날에 편지밖에 못 줘서 미안해. 내가 돈이 없어.. 이번에 시험을 잘 못 봐서 마음이 많이 안 좋고 평소에 말도 잘 안 들어서 정말 미안해. 그래도 지금까지 나 잘 도와줘서 너무 고마워. 앞으로도 계속 건강하게 잘 지내고 그냥 모든 게 항상 고마워. 우리 가족 앞으로도 파이팅하자 사랑해!" },
+        { no: "24", name: "정채훈", birthday: "0705", content: "엄마 아빠 항상 저를 위해 힘써주셔서 감사합니다. 평소에는 잘 표현 못했지만 정말 많이 감사하고 사랑해요. 항상 제 곁에서 응원해주시고 챙겨주셔서 든든해요. 앞으로는 더 잘하고 더 자주 표현할게요. 어버이날 행복하게 보내세요, 사랑합니다." },
+        { no: "25", name: "정환희", birthday: "0205", content: "사랑하는 부모님께 어버이날 축하드리고요. 요즘 말 많이 안 들어서 죄송합니다. 해달라는 거 다 하게 해줘서 감사합니다. 부모님께는 감사하는 거밖에 없습니다. 저도 더 나아가서 부모님이 저한테 고마움을 느끼게 하는 아들이 되겠습니다." },
+        { no: "26", name: "최승호", birthday: "1126", content: "사랑하는 부모님께, 어머니 아버지 절 낳아주시고 키워주셔서 감사합니다. 제가 첫째여서 어머니 아버지 입장에서는 인생 처음으로 키우는 아이일 텐데 예쁘게 잘 키워주시고 사랑으로 보살펴 주셔서 감사합니다. 제가 누리는 이 모든 건 다 어머니 아버지가 절 낳아주시고 기르신 덕분에 누리는 겁니다. 항상 감사하고 사랑합니다." },
+        { no: "27", name: "한규희", birthday: "1117", content: "엄마 아빠에게, 항상 저 키워주시고 챙겨주셔서 감사합니다. 평소에는 표현 잘 못 했는데 정말 많이 사랑해요. 앞으로는 더 말 잘 듣고 좋은 모습 많이 보여드릴게요. 오래오래 건강하세요." },
+        { no: "28", name: "한다경", birthday: "0525", content: "엄마 아빠 나 다경이야 일단 어버이날 축하해. 엄마 아빠도 엄마 아빠가 처음인데 우릴 책임을 가지고 이렇게 성장할 수 있게 해줘서 고마워. 그리고 내가 내 생일 때 놀러 가자고 한마디 했는데 바로 그걸 듣고 엄마 아빠가 상추까지 생각해서 놀러 가는 계획을 짜는 거 보고 나 솔직히 감동 먹음ㅋ 암튼 어버이날 축하해😏👍" },
+        { no: "29", name: "허손명", birthday: "0315", content: "지금까지 키워주셔서 감사합니다. 사랑합니다!" },
+        { no: "30", name: "홍은우", birthday: "0524", content: "건강하신 우리 어머니, 아버지. 저는 은우예요. 저희가 벌써 함께한 지 17년이 되었네요. 요즘 어머니께서 형의 빈자리가 느껴진다고 저까지 대학교 가면 힘들 것 같다고 하신 말씀이 걱정되기도 하고 그러니까 제가 그냥 통학할게요. 걱정하지 마시고 그냥 행복하게 삽시다~💪🏻" }
     ];
 
     function getCardBgColor(step, total) { 
         const hue = (step / total) * 360; 
-        return `hsl(${hue}, 55%, 85%)`; 
+        return `hsl(${hue}, 60%, 85%)`; 
     }
 
     const grid = document.getElementById('mailboxGrid');
@@ -183,15 +90,13 @@
         const card = document.createElement('div');
         card.className = 'envelope-card';
         card.style.backgroundColor = getCardBgColor(i, students.length);
-        
-        // 성 제외 (예: '강동호' -> '동호')
         const firstName = s.name.substring(1); 
-        
         card.innerHTML = `<div class="envelope-icon">💌</div><div class="student-name">${firstName} 올림</div>`;
         card.onclick = () => {
-            const pass = prompt(`${s.name} 학생의 생일을 입력해주세요 (4자리)`);
-            if(pass === s.birthday) { showLetter(s); }
-            else if(pass !== null) { alert("생일이 틀렸어요!"); }
+            const pass = prompt(`${s.name}님의 비밀번호를 입력해주세요.\n(생일 4자리 + 번호 2자리)`);
+            const correctPass = s.birthday + s.no;
+            if(pass === correctPass) { showLetter(s); }
+            else if(pass !== null) { alert("비밀번호가 틀렸습니다. 다시 확인해 주세요!"); }
         };
         grid.appendChild(card);
     });
@@ -200,8 +105,7 @@
         document.getElementById('mainView').style.display = 'none';
         document.getElementById('letterView').style.display = 'block';
         document.getElementById('letterTo').innerText = `사랑하는 부모님께`;
-        document.getElementById('letterContent').innerText = s.content || "키워주셔서 감사합니다. 사랑해요!";
-        
+        document.getElementById('letterContent').innerText = s.content;
         const firstName = s.name.substring(1);
         document.getElementById('letterFrom').innerText = `- 사랑하는 ${firstName} 올림 -`;
         window.scrollTo(0,0);
